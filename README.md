@@ -19,7 +19,7 @@
   <p align="center">
     Access weather and climate data through the terminal.
     <p>
-      <a href="https://dev.meteostat.net"><strong>Explore the docs »</strong></a>
+      <a href="https://dev.meteostat.net/cli"><strong>Explore the docs »</strong></a>
     </p>
     <p>
       <a href="https://meteostat.net">Visit Website</a>
@@ -218,4 +218,4 @@ The Meteostat CLI is licensed under the [**MIT License**](https://github.com/met
 [issues-shield]: https://img.shields.io/github/issues/meteostat/cli.svg
 [issues-url]: https://github.com/meteostat/cli/issues
 [license-shield]: https://img.shields.io/github/license/meteostat/cli.svg
-[license-url]: https://github.com/meteostat/cli?tab=readme-ov-file#-license
+[license-url]: https://github.com/meteostat/cli/blob/main/LICENSE
