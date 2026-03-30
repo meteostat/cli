@@ -100,7 +100,7 @@ def plot_dataframe(
 
         typer.echo(
             "Error: Matplotlib is required for plot output. "
-            "Install with: pip install meteostat-cli[plot]",
+            'Install with: uv tool install "meteostat-cli[plot]"',
             err=True,
         )
         raise typer.Exit(1) from None

@@ -34,13 +34,19 @@
 ## 📚 Installation
 
 ```bash
-pip install --user meteostat-cli
+uv tool install meteostat-cli
 ```
 
-For plotting capabilities (`png`/`svg` output), install the `plot` extra:
+For plotting capabilities (`png` and `svg` output), install the `plot` extra:
 
 ```bash
-pip install --user meteostat-cli[plot]
+uv tool install "meteostat-cli[plot]"
+```
+
+Alternatively, you can use `uvx`:
+
+```bash
+uvx --from meteostat-cli meteo
 ```
 
 ## 🚀 Usage
