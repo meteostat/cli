@@ -14,6 +14,7 @@ import yaml
 # CLI-specific config keys (not part of Meteostat library config)
 CLI_CONFIG_KEYS = {
     "interpolation_radius": 25000,
+    "interpolation_station_count": 10,
     "humanize": True,
 }
 

@@ -86,7 +86,7 @@ class TestNearbyCommand:
         with patch("meteostat.stations") as mock_stations:
             mock_stations.nearby.return_value = df
             with patch("meteostat.Point"):
-                result = invoke("nearby", "50.1109", "8.6821")
+                result = invoke("nearby", "50.1109,8.6821")
                 assert result.exit_code == 0
                 assert "Frankfurt" in result.output
 
@@ -259,7 +259,7 @@ class TestAllFlag:
         with patch("meteostat.stations") as mock_stations:
             mock_stations.nearby.return_value = df
             with patch("meteostat.Point"):
-                result = invoke("nearby", "50.1109", "8.6821", "--all")
+                result = invoke("nearby", "50.1109,8.6821", "--all")
                 assert result.exit_code == 0
 
     def test_hourly_all_flag(self, invoke):
@@ -311,7 +311,6 @@ class TestAllFlag:
         """--all flag appears in help for all data commands."""
         for cmd in [
             "station",
-            "stations",
             "nearby",
             "inventory",
             "hourly",
@@ -544,7 +543,7 @@ class TestNearbyEdgeCases:
         """Nearby command exits 1 when no stations found."""
         with patch("meteostat.stations") as ms, patch("meteostat.Point"):
             ms.nearby.return_value = pd.DataFrame()
-            result = invoke("nearby", "50.1109", "8.6821")
+            result = invoke("nearby", "50.1109,8.6821")
             assert result.exit_code == 1
             assert "No data" in result.output
 
@@ -556,19 +555,19 @@ class TestNearbyEdgeCases:
         )
         with patch("meteostat.stations") as ms, patch("meteostat.Point"):
             ms.nearby.return_value = df
-            result = invoke("nearby", "50.1109", "8.6821", "--format", "csv")
+            result = invoke("nearby", "50.1109,8.6821", "--format", "csv")
             assert result.exit_code == 0
             assert "name" in result.output
 
     def test_nearby_invalid_latitude(self, invoke):
         """Nearby command exits 2 when latitude is out of range."""
-        result = invoke("nearby", "200", "8.6821")
+        result = invoke("nearby", "200,8.6821")
         assert result.exit_code == 2
         assert "Latitude" in result.output
 
     def test_nearby_invalid_longitude(self, invoke):
         """Nearby command exits 2 when longitude is out of range."""
-        result = invoke("nearby", "50.1109", "200")
+        result = invoke("nearby", "50.1109,200")
         assert result.exit_code == 2
         assert "Longitude" in result.output
 

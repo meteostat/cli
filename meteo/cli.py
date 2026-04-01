@@ -48,7 +48,6 @@ def _register_commands() -> None:
 
     app.command("config")(config_cmd)
     app.command("station")(station_cmd)
-    app.command("stations")(station_cmd)
     app.command("s", hidden=True)(station_cmd)
     app.command("nearby")(nearby_cmd)
     app.command("inventory")(inventory_cmd)

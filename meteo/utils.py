@@ -121,6 +121,15 @@ def get_interpolation_radius() -> int:
     return CLI_CONFIG_KEYS["interpolation_radius"]
 
 
+def get_interpolation_station_count() -> int:
+    """Get the configured station count limit for coordinate-based queries."""
+    data = load_config()
+    key = "interpolation_station_count"
+    if key in data:
+        return int(data[key])
+    return CLI_CONFIG_KEYS["interpolation_station_count"]
+
+
 def detect_format(fmt: str | None, output: str | None) -> str:
     """Detect the output format from explicit flag or file extension."""
     if fmt is not None:
@@ -362,7 +371,7 @@ def fetch_timeseries(
         else:
             point = ms.Point(resolved[1], resolved[2])
             radius = get_interpolation_radius()
-            nearby = ms.stations.nearby(point, radius=radius)
+            nearby = ms.stations.nearby(point, radius=radius, limit=get_interpolation_station_count())
             if nearby.empty:
                 typer.echo(
                     "No weather stations found within the specified radius.",
@@ -397,7 +406,7 @@ def fetch_timeseries(
             else:
                 point = ms.Point(resolved[1], resolved[2])
                 radius = get_interpolation_radius()
-                nearby = ms.stations.nearby(point, radius=radius)
+                nearby = ms.stations.nearby(point, radius=radius, limit=get_interpolation_station_count())
                 if nearby.empty:
                     typer.echo(
                         "No weather stations found within the specified radius.",
@@ -434,7 +443,7 @@ def fetch_timeseries(
             else:
                 point = ms.Point(resolved[1], resolved[2])
                 radius = get_interpolation_radius()
-                nearby = ms.stations.nearby(point, radius=radius)
+                nearby = ms.stations.nearby(point, radius=radius, limit=get_interpolation_station_count())
                 if nearby.empty:
                     typer.echo(
                         "No weather stations found within the specified radius.",
