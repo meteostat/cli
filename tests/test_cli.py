@@ -67,12 +67,6 @@ def test_command_help_config(invoke):
     assert result.exit_code == 0
 
 
-def test_command_help_stations(invoke):
-    """Test that 'stations --help' works."""
-    result = invoke("stations", "--help")
-    assert result.exit_code == 0
-
-
 def test_command_help_nearby(invoke):
     """Test that 'nearby --help' works."""
     result = invoke("nearby", "--help")

@@ -6,10 +6,11 @@ from meteo.utils import detect_format, output_df
 
 
 def nearby_cmd(
-    lat: float = typer.Argument(..., help="Latitude."),
-    lon: float = typer.Argument(..., help="Longitude."),
+    coords: str = typer.Argument(..., help="Coordinates as lat,lon (e.g. 48.1,11.6)."),
     limit: int = typer.Option(5, "--limit", "-l", help="Maximum number of stations."),
-    radius: int = typer.Option(5000, "--radius", "-r", help="Search radius in meters."),
+    radius: int | None = typer.Option(
+        None, "--radius", "-r", help="Search radius in meters."
+    ),
     fmt: str | None = typer.Option(
         None, "--format", "-f", help="Output format (csv, json, xlsx, parquet)."
     ),
@@ -24,17 +25,25 @@ def nearby_cmd(
     """Find weather stations near a location."""
     import meteostat as ms
 
-    if not (-90 <= lat <= 90):
-        typer.echo(f"Error: Latitude must be between -90 and 90, got {lat}.", err=True)
-        raise typer.Exit(2)
-    if not (-180 <= lon <= 180):
+    parts = coords.split(",", 1)
+    if len(parts) != 2:
         typer.echo(
-            f"Error: Longitude must be between -180 and 180, got {lon}.", err=True
+            "Error: Coordinates must be in lat,lon format (e.g. 48.1,11.6).", err=True
         )
         raise typer.Exit(2)
+    try:
+        lat = float(parts[0])
+        lon = float(parts[1])
+    except ValueError:
+        typer.echo(f"Error: Invalid coordinates: {coords}", err=True)
+        raise typer.Exit(2) from None
+    if not (-90 <= lat <= 90):
+        raise typer.BadParameter(f"Latitude must be between -90 and 90, got {lat}")
+    if not (-180 <= lon <= 180):
+        raise typer.BadParameter(f"Longitude must be between -180 and 180, got {lon}")
 
     point = ms.Point(lat, lon)
-    df = ms.stations.nearby(point, radius=radius, limit=limit)
+    df = ms.stations.nearby(point, radius=radius or 40_075_000, limit=limit)
 
     actual_fmt = detect_format(fmt, output)
     output_df(df, actual_fmt, output, no_header, show_all=show_all)
