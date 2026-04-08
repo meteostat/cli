@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "meteostat-cli"
-version = "0.1.0"
+version = "0.2.0"
 description = "Access weather and climate data through the terminal."
 authors = [{ name = "Meteostat", email = "info@meteostat.net" }]
 readme = "README.md"
