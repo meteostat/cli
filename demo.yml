@@ -1,0 +1,266 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: bash -l
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /Users/chris/Meteostat/cli
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 120
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 20
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: -1
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: null
+    title: Meteostat
+    style:
+      border: 0px black solid
+      backgroundColor: "#1D1D1D"
+      # boxShadow: none
+      padding: 10px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 14
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 151
+    content: "$ "
+  - delay: 200
+    content: m
+  - delay: 220
+    content: e
+  - delay: 103
+    content: t
+  - delay: 100
+    content: e
+  - delay: 200
+    content: o
+  - delay: 167
+    content: ' '
+  - delay: 100
+    content: 'n'
+  - delay: 150
+    content: e
+  - delay: 90
+    content: a
+  - delay: 200
+    content: r
+  - delay: 150
+    content: b
+  - delay: 140
+    content: 'y'
+  - delay: 110
+    content: ' '
+  - delay: 200
+    content: '5'
+  - delay: 170
+    content: '0'
+  - delay: 100
+    content: ','
+  - delay: 200
+    content: '8'
+  - delay: 138
+    content: .
+  - delay: 209
+    content: '6'
+  - delay: 200
+    content: "\r\n"
+  - delay: 103
+    content: "                        name country region  latitude  longitude  elevation       timezone  distance\r\nid                                                                                                  \r\nEDFE0  Egelsbach / Erzhausen      DE     HE   49.9620     8.6447        117  Europe/Berlin    5298.1\r\n10637      Frankfurt Airport      DE     HE   50.0500     8.6000        111  Europe/Berlin    5559.7\r\nD4090               Raunheim      DE     HE   50.0056     8.4291         89  Europe/Berlin   12230.2\r\nD0917              Darmstadt      DE     HE   49.8809     8.6779        162  Europe/Berlin   14368.8\r\nD1424     Frankfurt  Westend      DE     HE   50.1269     8.6694        124  Europe/Berlin   14954.9\r\n"
+  - delay: 38
+    content: "$ "
+  - delay: 1011
+    content: m
+  - delay: 168
+    content: e
+  - delay: 137
+    content: t
+  - delay: 100
+    content: e
+  - delay: 200
+    content: o
+  - delay: 100
+    content: ' '
+  - delay: 200
+    content: d
+  - delay: 90
+    content: a
+  - delay: 200
+    content: i
+  - delay: 109
+    content: l
+  - delay: 200
+    content: 'y'
+  - delay: 123
+    content: ' '
+  - delay: 200
+    content: '1'
+  - delay: 200
+    content: '0'
+  - delay: 188
+    content: '6'
+  - delay: 150
+    content: '3'
+  - delay: 174
+    content: '7'
+  - delay: 145
+    content: ' '
+  - delay: 200
+    content: '-'
+  - delay: 130
+    content: '-'
+  - delay: 200
+    content: s
+  - delay: 150
+    content: t
+  - delay: 158
+    content: a
+  - delay: 142
+    content: r
+  - delay: 90
+    content: t
+  - delay: 130
+    content: ' '
+  - delay: 200
+    content: '2'
+  - delay: 150
+    content: '0'
+  - delay: 140
+    content: '2'
+  - delay: 200
+    content: '0'
+  - delay: 171
+    content: ' '
+  - delay: 200
+    content: '-'
+  - delay: 88
+    content: '-'
+  - delay: 130
+    content: e
+  - delay: 200
+    content: 'n'
+  - delay: 170
+    content: d
+  - delay: 100
+    content: ' '
+  - delay: 200
+    content: '2'
+  - delay: 200
+    content: '0'
+  - delay: 150
+    content: '2'
+  - delay: 90
+    content: '5'
+  - delay: 119
+    content: ' '
+  - delay: 200
+    content: '-'
+  - delay: 124
+    content: '-'
+  - delay: 200
+    content: a
+  - delay: 140
+    content: g
+  - delay: 130
+    content: g
+  - delay: 150
+    content: ' '
+  - delay: 130
+    content: m
+  - delay: 120
+    content: a
+  - delay: 150
+    content: x
+  - delay: 250
+    content: "\r\n"
+  - delay: 733
+    content: "         temp  tmin  tmax  rhum  prcp  snwd  wspd   wpgt    pres  tsun  cldc\r\nstation                                                                     \r\n10637    30.1  22.6  38.4   100  62.5    60  39.6  126.0  1047.5   942     8\r\n"

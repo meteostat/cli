@@ -31,6 +31,8 @@
   </p>
 </div>
 
+![](demo.gif)
+
 ## 📚 Installation
 
 ```bash
@@ -51,28 +53,10 @@ uvx --from meteostat-cli meteo
 
 ## 🚀 Usage
 
-### Get daily weather data for a station
+Let's get daily weather data for Frankfurt, Germany (station ID `10637`) for the year 2024:
 
 ```bash
 meteo daily 10637 --start 2024-01-01 --end 2024-12-31
-```
-
-### Get hourly data by coordinates (with interpolation)
-
-```bash
-meteo hourly 50.1109,8.6821 --start 2024-01-01 --end 2024-01-07
-```
-
-### Export data to a file
-
-```bash
-meteo daily 10637 -s 2024-01-01 -e 2024-12-31 --output data.json
-```
-
-### Plot temperature data
-
-```bash
-meteo daily 10637 -s 2024-01-01 -e 2024-12-31 --output chart.png
 ```
 
 ## 📖 Commands
