@@ -32,7 +32,7 @@ def nearby_cmd(
         lon = float(parts[1])
     except ValueError:
         typer.echo(f"Error: Invalid coordinates: {coords}", err=True)
-        raise typer.Exit(2)
+        raise typer.Exit(2) from None
     if not (-90 <= lat <= 90):
         raise typer.BadParameter(f"Latitude must be between -90 and 90, got {lat}")
     if not (-180 <= lon <= 180):
