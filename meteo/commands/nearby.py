@@ -8,7 +8,9 @@ from meteo.utils import detect_format, output_df
 def nearby_cmd(
     coords: str = typer.Argument(..., help="Coordinates as lat,lon (e.g. 48.1,11.6)."),
     limit: int = typer.Option(5, "--limit", "-l", help="Maximum number of stations."),
-    radius: int | None = typer.Option(None, "--radius", "-r", help="Search radius in meters."),
+    radius: int | None = typer.Option(
+        None, "--radius", "-r", help="Search radius in meters."
+    ),
     fmt: str | None = typer.Option(
         None, "--format", "-f", help="Output format (csv, json, xlsx, parquet)."
     ),
@@ -25,7 +27,9 @@ def nearby_cmd(
 
     parts = coords.split(",", 1)
     if len(parts) != 2:
-        typer.echo("Error: Coordinates must be in lat,lon format (e.g. 48.1,11.6).", err=True)
+        typer.echo(
+            "Error: Coordinates must be in lat,lon format (e.g. 48.1,11.6).", err=True
+        )
         raise typer.Exit(2)
     try:
         lat = float(parts[0])

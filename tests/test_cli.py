@@ -67,7 +67,6 @@ def test_command_help_config(invoke):
     assert result.exit_code == 0
 
 
-
 def test_command_help_nearby(invoke):
     """Test that 'nearby --help' works."""
     result = invoke("nearby", "--help")

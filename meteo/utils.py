@@ -371,7 +371,9 @@ def fetch_timeseries(
         else:
             point = ms.Point(resolved[1], resolved[2])
             radius = get_interpolation_radius()
-            nearby = ms.stations.nearby(point, radius=radius, limit=get_interpolation_station_count())
+            nearby = ms.stations.nearby(
+                point, radius=radius, limit=get_interpolation_station_count()
+            )
             if nearby.empty:
                 typer.echo(
                     "No weather stations found within the specified radius.",
@@ -406,7 +408,9 @@ def fetch_timeseries(
             else:
                 point = ms.Point(resolved[1], resolved[2])
                 radius = get_interpolation_radius()
-                nearby = ms.stations.nearby(point, radius=radius, limit=get_interpolation_station_count())
+                nearby = ms.stations.nearby(
+                    point, radius=radius, limit=get_interpolation_station_count()
+                )
                 if nearby.empty:
                     typer.echo(
                         "No weather stations found within the specified radius.",
@@ -443,7 +447,9 @@ def fetch_timeseries(
             else:
                 point = ms.Point(resolved[1], resolved[2])
                 radius = get_interpolation_radius()
-                nearby = ms.stations.nearby(point, radius=radius, limit=get_interpolation_station_count())
+                nearby = ms.stations.nearby(
+                    point, radius=radius, limit=get_interpolation_station_count()
+                )
                 if nearby.empty:
                     typer.echo(
                         "No weather stations found within the specified radius.",
