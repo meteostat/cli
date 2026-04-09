@@ -48,10 +48,10 @@ uv tool install "meteostat-cli[plot]"
 Alternatively, you can use `uvx`:
 
 ```bash
-uvx --from meteostat-cli meteo
+uvx --from meteostat-cli meteo [YOUR_COMMANDS]
 ```
 
-### Shell completion
+### ⚡ Shell Completion
 
 ```bash
 meteo --install-completion   # Bash, Zsh, Fish, PowerShell
@@ -59,10 +59,18 @@ meteo --install-completion   # Bash, Zsh, Fish, PowerShell
 
 ## 🚀 Usage
 
-Let's get daily weather data for Frankfurt, Germany (station ID `10637`) for the year 2024:
+Want to know the hottest temperature of 2024 at Frankfurt Airport (station `10637`)? Run the following command:
 
 ```bash
-meteo daily 10637 --start 2024-01-01 --end 2024-12-31
+meteo daily 10637 -s 2024-01-01 -e 2024-12-31 -p tmax --agg max
+```
+
+This will yield the following output:
+
+```
+         tmax
+station
+10637    35.9
 ```
 
 ## 📖 Documentation
