@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "meteostat-cli"
-version = "0.2.0"
+version = "0.3.0"
 description = "Access weather and climate data through the terminal."
 authors = [{ name = "Meteostat", email = "info@meteostat.net" }]
 readme = "README.md"
@@ -32,6 +32,7 @@ plot = ["matplotlib>=3.9.0"]
 
 [project.scripts]
 meteo = "meteo.cli:main"
+meteostat-cli = "meteo.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/meteostat/cli"

@@ -48,7 +48,7 @@ uv tool install "meteostat-cli[plot]"
 Alternatively, you can use `uvx`:
 
 ```bash
-uvx --from meteostat-cli meteo [YOUR_COMMANDS]
+uvx meteostat-cli [YOUR_COMMAND]
 ```
 
 ### ⚡ Shell Completion
