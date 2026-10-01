@@ -595,4 +595,3 @@ class TestBuild:
         assert "with 3 stations (1 skipped)" in result.output
         assert output.exists()
         assert not (repo / "stations.db").exists()
-
