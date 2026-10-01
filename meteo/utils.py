@@ -5,7 +5,7 @@ and common option patterns shared across time-series commands.
 """
 
 import sys
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from typing import Any, Literal
 
@@ -68,13 +68,16 @@ def parse_date(value: str | None, is_end: bool = False) -> date | datetime | Non
 
 
 def parse_datetime(value: str | None, is_end: bool = False) -> datetime | None:
-    """Parse a date string and return a datetime object."""
+    """Parse a date string and return a datetime object.
+
+    Dates without a time component start at 00:00, or end at 23:59:59 if is_end.
+    """
     result = parse_date(value, is_end)
     if result is None:
         return None
     if isinstance(result, datetime):
         return result
-    return datetime(result.year, result.month, result.day)
+    return datetime.combine(result, time.max if is_end else time.min)
 
 
 def resolve_station_or_point(

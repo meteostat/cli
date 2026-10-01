@@ -45,6 +45,18 @@ For plotting capabilities (`png` and `svg` output), install the `plot` extra:
 uv tool install "meteostat-cli[plot]"
 ```
 
+To [contribute to the weather stations directory](https://dev.meteostat.net/cli/stations/contributing) using `meteo station add`, `edit`, `validate` and `build`, install the `contrib` extra:
+
+```bash
+uv tool install "meteostat-cli[contrib]"
+```
+
+For full provider support, use:
+
+```bash
+uv tool install "meteostat-cli[providers]"
+```
+
 Alternatively, you can use `uvx`:
 
 ```bash
@@ -80,6 +92,18 @@ Please refer to the [official documentation](https://dev.meteostat.net/cli) for 
 ## 🤝 Contributing
 
 Please read our [contributing guidelines](https://dev.meteostat.net/contributing) for details on how to contribute to Meteostat.
+
+### Local Development
+
+```bash
+uv tool install --force -e ".[plot,contrib,providers]"
+```
+
+You can now run the CLI locally using:
+
+```bash
+meteo [YOUR_COMMAND]
+```
 
 ## 📄 License
 

@@ -12,10 +12,11 @@ import typer
 import yaml
 
 # CLI-specific config keys (not part of Meteostat library config)
-CLI_CONFIG_KEYS = {
+CLI_CONFIG_KEYS: dict[str, Any] = {
     "interpolation_radius": 25000,
     "interpolation_station_count": 10,
     "humanize": True,
+    "stations_repo": None,
 }
 
 
@@ -113,7 +114,7 @@ def coerce_value(key: str, value: str) -> Any:
     if key in CLI_CONFIG_KEYS:
         # CLI-specific keys use their default type
         default = CLI_CONFIG_KEYS[key]
-        target_type: type | None = type(default)
+        target_type: type | None = str if default is None else type(default)
     else:
         target_type = get_config_type(key)
 

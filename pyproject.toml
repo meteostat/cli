@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "meteostat-cli"
-version = "0.3.0"
+version = "0.4.0"
 description = "Access weather and climate data through the terminal."
 authors = [{ name = "Meteostat", email = "info@meteostat.net" }]
 readme = "README.md"
@@ -23,12 +23,20 @@ classifiers = [
 ]
 dependencies = [
     "typer>=0.15.0",
-    "meteostat>=2.1.4,<3",
+    "meteostat>=2.1.5,<3",
     "pyyaml>=6.0",
 ]
 
 [project.optional-dependencies]
 plot = ["matplotlib>=3.9.0"]
+contrib = [
+    "jsonschema>=4.20.0",
+    "pycountry>=24.6.1",
+]
+providers = [
+    "metar>=1.11.0",
+    "lxml>=5.3.0",
+]
 
 [project.scripts]
 meteo = "meteo.cli:main"
@@ -57,6 +65,9 @@ line-length = 88
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "SIM", "C4", "PIE"]
 ignore = ["E501"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["typer.Argument", "typer.Option"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["meteo"]

@@ -73,6 +73,14 @@ class TestParseDatetime:
         assert isinstance(result, datetime)
         assert result == datetime(2020, 1, 15)
 
+    def test_end_of_day(self):
+        result = parse_datetime("2020-01-15", is_end=True)
+        assert result == datetime(2020, 1, 15, 23, 59, 59, 999999)
+
+    def test_end_keeps_time(self):
+        result = parse_datetime("2020-01-15T12:00:00", is_end=True)
+        assert result == datetime(2020, 1, 15, 12)
+
     def test_none(self):
         assert parse_datetime(None) is None
 
