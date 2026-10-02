@@ -31,8 +31,10 @@ def runner():
 def invoke(runner):
     """Shortcut to invoke CLI commands and return the result."""
 
-    def _invoke(*args: str, catch_exceptions: bool = False):
-        result = runner.invoke(app, list(args), catch_exceptions=catch_exceptions)
+    def _invoke(*args: str, catch_exceptions: bool = False, input: str | None = None):
+        result = runner.invoke(
+            app, list(args), catch_exceptions=catch_exceptions, input=input
+        )
         return _StrippedResult(result)
 
     return _invoke

@@ -35,20 +35,46 @@ def callback(
     apply_config()
 
 
+STATION_EPILOG = (
+    "Contributor commands: add, edit, delete, validate, duplicates, build. "
+    "Run 'meteo station COMMAND --help' for details."
+)
+
+
 def _register_commands() -> None:
     """Register all command modules with the Typer app."""
     from meteo.commands.config import config_cmd
+    from meteo.commands.contrib.add import add_cmd
+    from meteo.commands.contrib.build import build_cmd
+    from meteo.commands.contrib.delete import delete_cmd
+    from meteo.commands.contrib.duplicates import duplicates_cmd
+    from meteo.commands.contrib.edit import edit_cmd
+    from meteo.commands.contrib.validate import validate_cmd
     from meteo.commands.daily import daily_cmd, daily_cmd_alias
     from meteo.commands.hourly import hourly_cmd, hourly_cmd_alias
     from meteo.commands.inventory import inventory_cmd, inventory_cmd_alias
     from meteo.commands.monthly import monthly_cmd, monthly_cmd_alias
     from meteo.commands.nearby import nearby_cmd
     from meteo.commands.normals import normals_cmd, normals_cmd_alias
-    from meteo.commands.station import station_cmd
+    from meteo.commands.station import LookupCommand, StationGroup, station_cmd
+
+    station_app = typer.Typer(cls=StationGroup)
+    station_app.command(
+        StationGroup.default_command,
+        cls=LookupCommand,
+        hidden=True,
+        epilog=STATION_EPILOG,
+    )(station_cmd)
+    station_app.command("add")(add_cmd)
+    station_app.command("edit")(edit_cmd)
+    station_app.command("delete")(delete_cmd)
+    station_app.command("validate")(validate_cmd)
+    station_app.command("duplicates")(duplicates_cmd)
+    station_app.command("build")(build_cmd)
 
     app.command("config")(config_cmd)
-    app.command("station")(station_cmd)
-    app.command("s", hidden=True)(station_cmd)
+    app.add_typer(station_app, name="station", help=station_cmd.__doc__)
+    app.add_typer(station_app, name="s", hidden=True)
     app.command("nearby")(nearby_cmd)
     app.command("inventory")(inventory_cmd)
     app.command("i", hidden=True)(inventory_cmd_alias)

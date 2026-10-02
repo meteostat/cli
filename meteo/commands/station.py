@@ -1,9 +1,65 @@
 """Station command for the Meteostat CLI."""
 
+from typing import Any
+
 import pandas as pd
 import typer
+from typer.core import TyperCommand, TyperGroup
 
 from meteo.utils import detect_format, output_df
+
+
+class _LookupContext(typer.Context):
+    @property
+    def command_path(self) -> str:
+        # The lookup command has no name of its own
+        return super().command_path.rstrip()
+
+
+class LookupCommand(TyperCommand):
+    """Station lookup, invoked as ``meteo station`` (see StationGroup)."""
+
+    context_class = _LookupContext
+
+
+class StationGroup(TyperGroup):
+    """Group of station commands.
+
+    Runs the lookup command unless the first argument names a subcommand, so
+    ``meteo station [ID] [OPTIONS]`` and ``meteo station add`` can coexist.
+    """
+
+    default_command = "lookup"
+
+    def parse_args(self, ctx: Any, args: list[str]) -> list[str]:
+        if not args or args[0] not in self.commands:
+            args = [self.default_command, *args]
+        return super().parse_args(ctx, args)
+
+    def resolve_command(
+        self, ctx: Any, args: list[str]
+    ) -> tuple[str | None, Any, list[str]]:
+        name, cmd, rest = super().resolve_command(ctx, args)
+        # The lookup command is presented as `meteo station` itself
+        if name == self.default_command:
+            name = None
+        return name, cmd, rest
+
+
+def print_metadata(data: dict[str, Any]) -> None:
+    """Print station metadata as a key/value table."""
+    from rich.console import Console
+    from rich.table import Table
+
+    table = Table(show_header=False, show_lines=True, padding=(0, 2, 0, 0))
+    table.add_column(style="bold")
+    table.add_column()
+    for field, value in data.items():
+        display = str(value) if value is not None else ""
+        if field == "elevation" and value is not None:
+            display = f"{value} m"
+        table.add_row(field, display)
+    Console().print(table)
 
 
 def station_cmd(
@@ -64,18 +120,7 @@ def station_cmd(
         df = pd.DataFrame([data]).set_index("id")
 
         if actual_fmt == "text" and output is None:
-            from rich.console import Console
-            from rich.table import Table
-
-            table = Table(show_header=False, show_lines=True, padding=(0, 2, 0, 0))
-            table.add_column(style="bold")
-            table.add_column()
-            for field, value in data.items():
-                display = str(value) if value is not None else ""
-                if field == "elevation" and value is not None:
-                    display = f"{value} m"
-                table.add_row(field, display)
-            Console().print(table)
+            print_metadata(data)
         else:
             output_df(df, actual_fmt, output, no_header, show_all=show_all)
     else:
