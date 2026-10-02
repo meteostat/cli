@@ -154,8 +154,9 @@ def add_cmd(
         for dup in duplicates:
             other = dup.station_b if dup.station_a == station_id else dup.station_a
             other_name = stations[other].get("name", {}).get("en", "")
+            dist = f"{dup.distance} m, " if dup.distance is not None else ""
             typer.echo(
-                f"  {other}  {other_name} ({dup.distance} m, {', '.join(dup.reasons)})",
+                f"  {other}  {other_name} ({dist}{', '.join(dup.reasons)})",
                 err=True,
             )
         if not yes and not dry_run:
