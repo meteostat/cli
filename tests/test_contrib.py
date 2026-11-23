@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 from unittest.mock import patch
 
+import pyarrow.parquet as pq
 import pytest
 import typer
 
@@ -595,3 +596,63 @@ class TestBuild:
         assert "with 3 stations (1 skipped)" in result.output
         assert output.exists()
         assert not (repo / "stations.db").exists()
+
+    def test_build_parquet(self, run, repo, monkeypatch):
+        schema = load_schema()
+        schema["properties"]["active"] = {"type": "boolean"}
+        monkeypatch.setattr(
+            "meteo.contrib.validation.load_schema", lambda: copy.deepcopy(schema)
+        )
+        write(repo, BERLIN | {"id": "INACT", "identifiers": {}, "active": False})
+        write(repo, FRANKFURT | {"id": "BAD00", "identifiers": {}, "timezone": "X"})
+        result = run("build", "--format", "parquet")
+        assert result.exit_code == 0, result.output
+        assert "stations.parquet with 2 stations (1 skipped)" in result.output
+        assert not (repo / "stations.db").exists()
+
+        table = pq.read_table(repo / "stations.parquet")
+        assert table.column_names == [
+            "id",
+            "name",
+            "names",
+            "country",
+            "region",
+            "latitude",
+            "longitude",
+            "elevation",
+            "timezone",
+            "identifiers",
+        ]
+        rows = table.to_pylist()
+        assert [row["id"] for row in rows] == ["10384", "10637"]
+        assert rows[1] == {
+            "id": "10637",
+            "name": "Frankfurt Airport",
+            "names": [("de", "Frankfurt Flughafen")],
+            "country": "DE",
+            "region": "HE",
+            "latitude": 50.05,
+            "longitude": 8.6,
+            "elevation": 111,
+            "timezone": "Europe/Berlin",
+            "identifiers": [("icao", "EDDF"), ("wmo", "10637")],
+        }
+        assert rows[0]["names"] is None
+
+    def test_build_parquet_columns(self, run, repo):
+        result = run("build", "-f", "parquet")
+        assert result.exit_code == 0, result.output
+        table = pq.read_table(
+            repo / "stations.parquet", columns=["id", "latitude", "longitude"]
+        )
+        assert table.to_pylist() == [
+            {"id": "10384", "latitude": 52.4667, "longitude": 13.4},
+            {"id": "10637", "latitude": 50.05, "longitude": 8.6},
+        ]
+
+    def test_build_parquet_without_pyarrow(self, run, repo, monkeypatch):
+        monkeypatch.setitem(sys.modules, "pyarrow", None)
+        result = run("build", "--format", "parquet")
+        assert result.exit_code == 1
+        assert "meteostat-cli[contrib]" in result.output
+        assert not (repo / "stations.parquet").exists()
